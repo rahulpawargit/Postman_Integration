@@ -1,0 +1,373 @@
+{
+	"info": {
+		"_postman_id": "8237a18a-c561-4a11-9a9a-0b10b4d7e6bb",
+		"name": "Collection_01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_User_Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "14071de5-b4f7-4802-8ff0-56d8ac8c6e79",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"michael.lawson@reqres.in\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the first user name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].first_name).to.eql(\"Michael\");\r",
+							"});\r",
+							"postman.setNextRequest(\"UpdateUser\")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b7d35d8-7769-4218-86f0-e558b11ea846",
+						"exec": [
+							"console.log(\"This is prerequiest script\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/users?page=2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				},
+				"description": "It contains user details"
+			},
+			"response": []
+		},
+		{
+			"name": "Create_User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad82356c-0a23-4c8d-8b68-cd2d7603ebd9",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "36c9b6cf-9357-4e10-9703-dfc47b7a1637",
+						"exec": [
+							"var NAME = \"Pawar\"\r",
+							"var JOB= \"Software Testing\"\r",
+							"\r",
+							"pm.globals.set(\"uname\",NAME),\r",
+							"pm.globals.set(\"post\",JOB)\r",
+							"\r",
+							"console.log(\"Name i have set\", NAME)\r",
+							"console.warn(\"Job which i have set\", JOB)\r",
+							"console.info(\"Job which i have set\", JOB)\r",
+							"console.error(\"Job which i have set\", JOB)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"{{uname}}\",\r\n    \"job\":\"{{post}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delect_Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "08ed9ffb-f12f-4aad-a476-a304340bf679",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"postman.setNextRequest(\"null\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/users/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				},
+				"description": "Delete request always send the 204 status code"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b20e103-883c-4ffc-9d35-9e91605ac2a3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"postman.setNextRequest(\"Create_User\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?pages=1",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "pages",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://restful-booker.herokuapp.com/auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d118bde5-2ea9-49a0-943f-2c45edc7fa9b",
+						"exec": [
+							"\r",
+							"pm.test(\"Your test name\", function () \r",
+							"{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.globals.set(\"mytoken\", jsonData.token);\r",
+							"    console.log(\"My logs will show here-\", jsonData.token)\r",
+							"    pm.expect(jsonData.token).to.eql(jsonData.token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"admin\",\n    \"password\" : \"password123\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/auth",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d118bde5-2ea9-49a0-943f-2c45edc7fa9b",
+						"exec": [
+							"\r",
+							"pm.test(\"Your test name\", function () \r",
+							"{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.globals.set(\"mytoken\", jsonData.token);\r",
+							"    console.log(\"My logs will show here-\", jsonData.token)\r",
+							"    pm.expect(jsonData.token).to.eql(jsonData.token);\r",
+							"});\r",
+							"\r",
+							"postman.setNextRequest(\"UpdateBooking\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"admin\",\n    \"password\" : \"password123\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/auth",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4af0713b-560b-4927-a69a-c3bcf0e468d1",
+						"exec": [
+							"pm.globals.get(\"mytoken\");\r",
+							"console.log(\"My next request logs go here\", pm.globals.get(\"mytoken\"))\r",
+							"postman.setNextRequest(\"null\")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "62f35652-f65e-4cf0-8a86-629aa110e271",
+						"exec": [
+							"var fname = \"Rahul\"\r",
+							"pm.globals.set(\"firstname\", fname)\r",
+							"console.log(\"Updated Fiest name is \", fname)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{mytoken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"Breakfast\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/1",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

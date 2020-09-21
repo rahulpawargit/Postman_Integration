@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "367bb469-6dda-4a34-8ada-13592f40a213",
+		"name": "Collection_01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_User_Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9154fadd-7006-4931-9c14-6e7e5b41b312",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"pm.test(\"Response time required to\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"    \r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].first_name).to.eql(\"Michael\");\r",
+							"});\r",
+							"});\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				},
+				"description": "It contains user details"
+			},
+			"response": []
+		},
+		{
+			"name": "Create_User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Rahul\",\r\n    \"job\": \"QA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delect_Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				},
+				"description": "Delete request always send the 204 status code"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
